@@ -1,0 +1,10 @@
+com/dangdang/ddframe/rdb/sharding/spring/namespace/parser/ShardingJdbcDataSourceBeanDefinitionParser.class
+com/dangdang/ddframe/rdb/sharding/spring/namespace/constants/ShardingJdbcDataSourceBeanDefinitionParserTag.class
+com/dangdang/ddframe/rdb/sharding/spring/namespace/parser/MasterSlaveDataSourceBeanDefinitionParser.class
+com/dangdang/ddframe/rdb/sharding/spring/namespace/parser/ShardingJdbcStrategyBeanDefinitionParser.class
+com/dangdang/ddframe/rdb/sharding/spring/namespace/constants/MasterSlaveDataSourceBeanDefinitionParserTag.class
+com/dangdang/ddframe/rdb/sharding/spring/namespace/parser/ShardingJdbcStrategyBeanDefinition.class
+com/dangdang/ddframe/rdb/sharding/spring/namespace/constants/ShardingJdbcStrategyBeanDefinitionParserTag.class
+com/dangdang/ddframe/rdb/sharding/spring/datasource/SpringShardingDataSource.class
+com/dangdang/ddframe/rdb/sharding/spring/namespace/handler/ShardingJdbcNamespaceHandler.class
+com/dangdang/ddframe/rdb/sharding/spring/namespace/parser/ShardingJdbcDataSourceBeanDefinitionParser$1.class

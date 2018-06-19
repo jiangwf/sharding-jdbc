@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/sharding-jdbc.iml" filepath="$PROJECT_DIR$/sharding-jdbc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sharding-jdbc-config-parent/sharding-jdbc-config-common/sharding-jdbc-config-common.iml" filepath="$PROJECT_DIR$/sharding-jdbc-config-parent/sharding-jdbc-config-common/sharding-jdbc-config-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sharding-jdbc-config-parent/sharding-jdbc-config-parent.iml" filepath="$PROJECT_DIR$/sharding-jdbc-config-parent/sharding-jdbc-config-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sharding-jdbc-config-parent/sharding-jdbc-config-spring/sharding-jdbc-config-spring.iml" filepath="$PROJECT_DIR$/sharding-jdbc-config-parent/sharding-jdbc-config-spring/sharding-jdbc-config-spring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sharding-jdbc-config-parent/sharding-jdbc-config-yaml/sharding-jdbc-config-yaml.iml" filepath="$PROJECT_DIR$/sharding-jdbc-config-parent/sharding-jdbc-config-yaml/sharding-jdbc-config-yaml.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sharding-jdbc-core/sharding-jdbc-core.iml" filepath="$PROJECT_DIR$/sharding-jdbc-core/sharding-jdbc-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sharding-jdbc-transaction-parent/sharding-jdbc-transaction/sharding-jdbc-transaction.iml" filepath="$PROJECT_DIR$/sharding-jdbc-transaction-parent/sharding-jdbc-transaction/sharding-jdbc-transaction.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sharding-jdbc-transaction-parent/sharding-jdbc-transaction-async-job/sharding-jdbc-transaction-async-job.iml" filepath="$PROJECT_DIR$/sharding-jdbc-transaction-parent/sharding-jdbc-transaction-async-job/sharding-jdbc-transaction-async-job.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sharding-jdbc-transaction-parent/sharding-jdbc-transaction-storage/sharding-jdbc-transaction-storage.iml" filepath="$PROJECT_DIR$/sharding-jdbc-transaction-parent/sharding-jdbc-transaction-storage/sharding-jdbc-transaction-storage.iml" />
+    </modules>
+  </component>
+</project>

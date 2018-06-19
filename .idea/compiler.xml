@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="sharding-jdbc-config-common" />
+        <module name="sharding-jdbc-config-spring" />
+        <module name="sharding-jdbc-config-yaml" />
+        <module name="sharding-jdbc-core" />
+        <module name="sharding-jdbc-transaction" />
+        <module name="sharding-jdbc-transaction-async-job" />
+        <module name="sharding-jdbc-transaction-storage" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="sharding-jdbc" target="1.5" />
+      <module name="sharding-jdbc-config-common" target="1.7" />
+      <module name="sharding-jdbc-config-parent" target="1.5" />
+      <module name="sharding-jdbc-config-spring" target="1.7" />
+      <module name="sharding-jdbc-config-yaml" target="1.7" />
+      <module name="sharding-jdbc-core" target="1.7" />
+      <module name="sharding-jdbc-transaction" target="1.7" />
+      <module name="sharding-jdbc-transaction-async-job" target="1.7" />
+      <module name="sharding-jdbc-transaction-parent" target="1.5" />
+      <module name="sharding-jdbc-transaction-storage" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
