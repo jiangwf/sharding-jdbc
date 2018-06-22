@@ -12,6 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ * DONGYIBING.STRING的convertType问题，重写此类 增加 case "java.lang.String":
  * </p>
  */
 
@@ -28,15 +29,15 @@ import java.util.Date;
 
 /**
  * 结果集工具类.
- * 
+ *
  * @author gaohongtao
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ResultSetUtil {
-    
+
     /**
      * 根据返回值类型返回特定类型的结果.
-     * 
+     *
      * @param value 原始结果
      * @param convertType 返回值类型
      * @return 特定类型的返回结果
@@ -44,7 +45,7 @@ public final class ResultSetUtil {
     public static Object convertValue(final Object value, final Class<?> convertType) {
         if (null == value) {
             return convertNullValue(convertType);
-        } 
+        }
         if (value.getClass() == convertType) {
             return value;
         }
@@ -60,7 +61,7 @@ public final class ResultSetUtil {
             return value;
         }
     }
-    
+
     private static Object convertNullValue(final Class<?> convertType) {
         switch (convertType.getName()) {
             case "byte":
@@ -79,7 +80,7 @@ public final class ResultSetUtil {
                 return null;
         }
     }
-    
+
     private static Object convertNumberValue(final Object value, final Class<?> convertType) {
         Number number = (Number) value;
         switch (convertType.getName()) {
@@ -105,7 +106,7 @@ public final class ResultSetUtil {
                 throw new ShardingJdbcException("Unsupported data type:%s", convertType);
         }
     }
-    
+
     private static Object convertDateValue(final Object value, final Class<?> convertType) {
         Date date = (Date) value;
         switch (convertType.getName()) {
@@ -115,6 +116,8 @@ public final class ResultSetUtil {
                 return new Time(date.getTime());
             case "java.sql.Timestamp":
                 return new Timestamp(date.getTime());
+            case "java.lang.String":
+                return value.toString();
             default:
                 throw new ShardingJdbcException("Unsupported Date type:%s", convertType);
         }

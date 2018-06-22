@@ -10,6 +10,7 @@
         <module name="sharding-jdbc-config-spring" />
         <module name="sharding-jdbc-config-yaml" />
         <module name="sharding-jdbc-core" />
+        <module name="sharding-jdbc-test" />
         <module name="sharding-jdbc-transaction" />
         <module name="sharding-jdbc-transaction-async-job" />
         <module name="sharding-jdbc-transaction-storage" />
@@ -22,6 +23,7 @@
       <module name="sharding-jdbc-config-spring" target="1.7" />
       <module name="sharding-jdbc-config-yaml" target="1.7" />
       <module name="sharding-jdbc-core" target="1.7" />
+      <module name="sharding-jdbc-test" target="1.7" />
       <module name="sharding-jdbc-transaction" target="1.7" />
       <module name="sharding-jdbc-transaction-async-job" target="1.7" />
       <module name="sharding-jdbc-transaction-parent" target="1.5" />

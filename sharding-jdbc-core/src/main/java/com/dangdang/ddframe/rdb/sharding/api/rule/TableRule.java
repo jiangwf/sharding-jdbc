@@ -1,19 +1,7 @@
-/*
- * Copyright 1999-2015 dangdang.com.
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * </p>
- */
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
 
 package com.dangdang.ddframe.rdb.sharding.api.rule;
 
@@ -21,320 +9,373 @@ import com.dangdang.ddframe.rdb.sharding.api.strategy.database.DatabaseShardingS
 import com.dangdang.ddframe.rdb.sharding.api.strategy.table.TableShardingStrategy;
 import com.dangdang.ddframe.rdb.sharding.keygen.KeyGenerator;
 import com.dangdang.ddframe.rdb.sharding.keygen.KeyGeneratorFactory;
+import com.dangdang.ddframe.rdb.sharding.util.Constant;
 import com.google.common.base.Preconditions;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.List;
+import java.beans.ConstructorProperties;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
-/**
- * 表规则配置对象.
- * 
- * @author zhangliang
- */
-@Getter
-@ToString
-public final class TableRule {
-    
-    private final String logicTable;
-    
-    private final boolean dynamic;
-    
-    private final List<DataNode> actualTables;
-    
-    private final DatabaseShardingStrategy databaseShardingStrategy;
-    
-    private final TableShardingStrategy tableShardingStrategy;
-    
-    private final String generateKeyColumn;
-    
-    private final KeyGenerator keyGenerator;
-    
-    /**
-     * 全属性构造器.
-     *
-     * <p>用于Spring非命名空间的配置.</p>
-     *
-     * <p>未来将改为private权限, 不在对外公开, 不建议使用非Spring命名空间的配置.</p>
-     *
-     * @deprecated 未来将改为private权限, 不在对外公开, 不建议使用非Spring命名空间的配置.
-     * @param logicTable 逻辑表名称
-     * @param dynamic 是否为动态表
-     * @param actualTables 真实表集合
-     * @param dataSourceRule 数据源分片规则
-     * @param dataSourceNames 数据源名称集合
-     * @param databaseShardingStrategy 数据库分片策略
-     * @param tableShardingStrategy 表分片策略
-     * @param generateKeyColumn 自增列名称
-     * @param keyGenerator 列主键生成器
-     */
+public class TableRule {
+
+    private static final Logger logger = LoggerFactory.getLogger(TableRule.class);
+    public String logicTable;
+    public boolean dynamic = false;
+    public List<DataNode> actualTables;
+    public List<DataNode> actualTablesBack;
+    public DatabaseShardingStrategy databaseShardingStrategy;
+    public TableShardingStrategy tableShardingStrategy;
+    public String generateKeyColumn;
+    public KeyGenerator keyGenerator;
+
+    /** @deprecated  增加程序启动动态解析分库分表datanode参数 wp*/
     @Deprecated
-    public TableRule(final String logicTable, final boolean dynamic, final List<String> actualTables, final DataSourceRule dataSourceRule, final Collection<String> dataSourceNames,
-                     final DatabaseShardingStrategy databaseShardingStrategy, final TableShardingStrategy tableShardingStrategy,
-                     final String generateKeyColumn, final KeyGenerator keyGenerator) {
+    public TableRule(String logicTable, boolean dynamic, List<String> actualTables, DataSourceRule dataSourceRule, Collection<String> dataSourceNames, DatabaseShardingStrategy databaseShardingStrategy, TableShardingStrategy tableShardingStrategy, String generateKeyColumn, KeyGenerator keyGenerator) {
         Preconditions.checkNotNull(logicTable);
         this.logicTable = logicTable;
         this.dynamic = dynamic;
         this.databaseShardingStrategy = databaseShardingStrategy;
         this.tableShardingStrategy = tableShardingStrategy;
-        if (dynamic) {
-            Preconditions.checkNotNull(dataSourceRule);
-            this.actualTables = generateDataNodes(dataSourceRule);
-        } else if (null == actualTables || actualTables.isEmpty()) {
-            Preconditions.checkNotNull(dataSourceRule);
-            this.actualTables = generateDataNodes(Collections.singletonList(logicTable), dataSourceRule, dataSourceNames);
+        if(dynamic) {
+//            Preconditions.checkNotNull(dataSourceRule);
+            this.actualTables = this.generateDataNodes(actualTables, dataSourceRule);
+            this.actualTablesBack = this.actualTables;
+
+            Map<String,String> yearMonthMap = new LinkedHashMap<>();
+            try {
+                Date dateFrom = new SimpleDateFormat("yyyyMM").parse("201707");//定义起始日期
+                Date dateEnd = new SimpleDateFormat("yyyyMM").parse(new SimpleDateFormat("yyyyMM").format(new Date()));//定义结束日期
+                Calendar calBegin = Calendar.getInstance();
+                calBegin.setTime(dateFrom);
+                Calendar calEnd = Calendar.getInstance();
+                calEnd.setTime(dateEnd);
+                while (calEnd.after(calBegin)) {
+                    // 根据日历的规则，为给定的日历字段添加或减去指定的时间量
+                    calBegin.add(Calendar.MONTH, 1);
+                    yearMonthMap.put((String)(new SimpleDateFormat("yyyyMM")).format(calBegin.getTime()), "");
+                }
+                boolean flag = false;
+                // 201707@finance_01_001-fiancne_10_001
+                List<DataNode> listDataNode = new ArrayList();
+                for (String dataNode:actualTables){
+                    for(String dataBase:dataNode.split("-")){
+                        if (dataBase.contains("@")){
+                            String[] str = dataBase.split("@");
+                            Map<String,String> yearMonthMapTemp = new LinkedHashMap<>();
+                            try {
+                                if (StringUtils.isNumeric(str[0])){
+                                    Date dateFromTemp = new SimpleDateFormat("yyyyMM").parse(str[0]);//定义起始日期
+                                    Calendar calBeginTemp = Calendar.getInstance();
+                                    calBeginTemp.setTime(dateFromTemp);
+                                    Calendar calEndTemp = Calendar.getInstance();
+                                    calEndTemp.setTime(dateEnd);
+                                    while (calEndTemp.after(calBeginTemp)) {
+                                        // 根据日历的规则，为给定的日历字段添加或减去指定的时间量
+                                        calBeginTemp.add(Calendar.MONTH, 1);
+                                        yearMonthMapTemp.put((String)(new SimpleDateFormat("yyyyMM")).
+                                                format(calBeginTemp.getTime()), "");
+                                    }
+                                }else {
+                                    throw new RuntimeException("分库分表动态参数配置错误（actual-tables），日期年月配置错误无法解析");
+                                }
+                                flag = splitTable(str[1], listDataNode, yearMonthMapTemp, logicTable, dataSourceRule);
+                            }catch (Exception e){
+                                throw new RuntimeException("分库分表动态参数配置错误（actual-tables），程序无法解析"+e.getMessage());
+                            }finally {
+                                yearMonthMapTemp.clear();
+                            }
+                        }else {
+                            flag = splitTable(dataBase, listDataNode, yearMonthMap, logicTable, dataSourceRule);
+                        }
+                        if (!flag){
+                            break;
+                        }
+                    }
+                }
+                if (flag){
+                    this.actualTables = listDataNode;
+                }else {
+                    this.actualTables = null;
+                }
+            } catch (ParseException e) {
+                logger.error("转换分库分表月份配置失败"+e.getMessage());
+                throw new RuntimeException("转换分库分表月份配置失败"+e.getMessage());
+            }
+
+        } else if(null != actualTables && !actualTables.isEmpty()) {
+            this.actualTables = this.generateDataNodes(actualTables, dataSourceRule, dataSourceNames);
+            this.actualTablesBack = this.actualTables;
         } else {
-            this.actualTables = generateDataNodes(actualTables, dataSourceRule, dataSourceNames);
+            Preconditions.checkNotNull(dataSourceRule);
+            this.actualTables = this.generateDataNodes(Collections.singletonList(logicTable), dataSourceRule, dataSourceNames);
+            this.actualTablesBack = this.actualTables;
         }
+
         this.generateKeyColumn = generateKeyColumn;
         this.keyGenerator = keyGenerator;
     }
-    
+
+    public List<DataNode> getActualTablesBack() {
+        return actualTablesBack;
+    }
+
+    public void setActualTablesBack(List<DataNode> actualTablesBack) {
+        this.actualTablesBack = actualTablesBack;
+    }
+
+
     /**
-     * 获取表规则配置对象构建器.
-     *
-     * @param logicTable 逻辑表名称 
-     * @return 表规则配置对象构建器
+     * 动态构建逻辑表和对应月份数据为物理表DataNode对象数据 wp
+     * @param dataBase
+     * @param listDataNode
+     * @param yearMonthMap
+     * @param logicTable
+     * @return
      */
-    public static TableRuleBuilder builder(final String logicTable) {
-        return new TableRuleBuilder(logicTable);
-    }
-    
-    private List<DataNode> generateDataNodes(final DataSourceRule dataSourceRule) {
-        Collection<String> dataSourceNames = dataSourceRule.getDataSourceNames();
-        List<DataNode> result = new ArrayList<>(dataSourceNames.size());
-        for (String each : dataSourceNames) {
-            result.add(new DynamicDataNode(each));
+    public static boolean splitTable(String dataBase, List listDataNode, Map<String,String> yearMonthMap, String logicTable,DataSourceRule dataSourceRule){
+        boolean flag = true;
+        if (dataBase != Constant.DATABASE_NAME && dataSourceRule.getDataSource(dataBase) != null){
+            for (Map.Entry<String, String> entry : yearMonthMap.entrySet()) {
+                DataNode dataNodeNew = new DataNode(dataBase,logicTable+"_"+entry.getKey());
+                listDataNode.add(dataNodeNew);
+            }
+        }else {
+            flag = false;
+            throw new RuntimeException("分库分表动态参数配置错误（actual-tables），程序无法解析,数据源："+dataBase+" 不存在或者配置错误");
         }
-        return result;
+        return flag;
     }
-    
-    private List<DataNode> generateDataNodes(final List<String> actualTables, final DataSourceRule dataSourceRule, final Collection<String> actualDataSourceNames) {
-        Collection<String> dataSourceNames = getDataSourceNames(dataSourceRule, actualDataSourceNames);
-        List<DataNode> result = new ArrayList<>(actualTables.size() * (dataSourceNames.isEmpty() ? 1 : dataSourceNames.size()));
-        for (String actualTable : actualTables) {
-            if (DataNode.isValidDataNode(actualTable)) {
-                result.add(new DataNode(actualTable));
-            } else {
-                for (String dataSourceName : dataSourceNames) {
-                    result.add(new DataNode(dataSourceName, actualTable));
+
+
+    public static TableRule.TableRuleBuilder builder(String logicTable) {
+        return new TableRule.TableRuleBuilder(logicTable);
+    }
+
+    /**
+     * 表动态取值默认取配置中的参数暂不处理待后面处理 wp
+     * @param actualTables
+     * @param dataSourceRule
+     * @return
+     */
+    private List<DataNode> generateDataNodes(List<String> actualTables, DataSourceRule dataSourceRule) {
+        Collection dataSourceNames = dataSourceRule.getDataSourceNames();
+        ArrayList result = new ArrayList(dataSourceNames.size());
+//        Iterator i$ = dataSourceNames.iterator();
+//        while(i$.hasNext()) {
+//            String each = (String)i$.next();
+//            result.add(new DynamicDataNode(each));
+//        }
+
+        Iterator i$ = actualTables.iterator();
+        while(true) {
+            while (i$.hasNext()) {
+                String actualTable = (String) i$.next();
+                result.add(new DataNode(logicTable,actualTable));
+            }
+            return result;
+        }
+    }
+
+    private List<DataNode> generateDataNodes(List<String> actualTables, DataSourceRule dataSourceRule, Collection<String> actualDataSourceNames) {
+        Collection dataSourceNames = this.getDataSourceNames(dataSourceRule, actualDataSourceNames);
+        ArrayList result = new ArrayList(actualTables.size() * (dataSourceNames.isEmpty()?1:dataSourceNames.size()));
+        Iterator i$ = actualTables.iterator();
+
+        while(true) {
+            while(i$.hasNext()) {
+                String actualTable = (String)i$.next();
+                if(DataNode.isValidDataNode(actualTable)) {
+                    result.add(new DataNode(actualTable));
+                } else {
+                    Iterator i$1 = dataSourceNames.iterator();
+
+                    while(i$1.hasNext()) {
+                        String dataSourceName = (String)i$1.next();
+                        result.add(new DataNode(dataSourceName, actualTable));
+                    }
                 }
             }
+            return result;
         }
-        return result;
     }
-    
-    private Collection<String> getDataSourceNames(final DataSourceRule dataSourceRule, final Collection<String> actualDataSourceNames) {
-        if (null == dataSourceRule) {
-            return Collections.emptyList();
-        }
-        if (null == actualDataSourceNames || actualDataSourceNames.isEmpty()) {
-            return dataSourceRule.getDataSourceNames();
-        }
-        return actualDataSourceNames;
+
+    private Collection<String> getDataSourceNames(DataSourceRule dataSourceRule, Collection<String> actualDataSourceNames) {
+        return (Collection)(null == dataSourceRule?Collections.emptyList():(null != actualDataSourceNames && !actualDataSourceNames.isEmpty()?actualDataSourceNames:dataSourceRule.getDataSourceNames()));
     }
-    
-    /**
-     * 根据数据源名称过滤获取真实数据单元.
-     *
-     * @param targetDataSources 数据源名称集合
-     * @param targetTables 真实表名称集合
-     * @return 真实数据单元
-     */
-    public Collection<DataNode> getActualDataNodes(final Collection<String> targetDataSources, final Collection<String> targetTables) {
-        return dynamic ? getDynamicDataNodes(targetDataSources, targetTables) : getStaticDataNodes(targetDataSources, targetTables);
+
+    public Collection<DataNode> getActualDataNodes(Collection<String> targetDataSources, Collection<String> targetTables) {
+        return this.dynamic?this.getDynamicDataNodes(targetDataSources, targetTables):this.getStaticDataNodes(targetDataSources, targetTables);
     }
-    
-    private Collection<DataNode> getDynamicDataNodes(final Collection<String> targetDataSources, final Collection<String> targetTables) {
-        Collection<DataNode> result = new LinkedHashSet<>(targetDataSources.size() * targetTables.size());
-        for (String targetDataSource : targetDataSources) {
-            for (String targetTable : targetTables) {
+
+    private Collection<DataNode> getDynamicDataNodes(Collection<String> targetDataSources, Collection<String> targetTables) {
+        LinkedHashSet result = new LinkedHashSet(targetDataSources.size() * targetTables.size());
+        Iterator i$ = targetDataSources.iterator();
+
+        while(i$.hasNext()) {
+            String targetDataSource = (String)i$.next();
+            Iterator i$1 = targetTables.iterator();
+
+            while(i$1.hasNext()) {
+                String targetTable = (String)i$1.next();
                 result.add(new DataNode(targetDataSource, targetTable));
             }
         }
         return result;
     }
-    
-    private Collection<DataNode> getStaticDataNodes(final Collection<String> targetDataSources, final Collection<String> targetTables) {
-        Collection<DataNode> result = new LinkedHashSet<>(actualTables.size());
-        for (DataNode each : actualTables) {
-            if (targetDataSources.contains(each.getDataSourceName()) && targetTables.contains(each.getTableName())) {
+
+    private Collection<DataNode> getStaticDataNodes(Collection<String> targetDataSources, Collection<String> targetTables) {
+        LinkedHashSet result = new LinkedHashSet(this.actualTables.size());
+        Iterator i$ = this.actualTables.iterator();
+
+        while(i$.hasNext()) {
+            DataNode each = (DataNode)i$.next();
+            if(targetDataSources.contains(each.getDataSourceName()) && targetTables.contains(each.getTableName())) {
                 result.add(each);
             }
         }
         return result;
     }
-    
-    /**
-     * 获取真实数据源.
-     *
-     * @return 真实表名称
-     */
+
     public Collection<String> getActualDatasourceNames() {
-        Collection<String> result = new LinkedHashSet<>(actualTables.size());
-        for (DataNode each : actualTables) {
+        LinkedHashSet result = new LinkedHashSet(this.actualTables.size());
+        Iterator i$ = this.actualTables.iterator();
+
+        while(i$.hasNext()) {
+            DataNode each = (DataNode)i$.next();
             result.add(each.getDataSourceName());
         }
         return result;
     }
-    
-    /**
-     * 根据数据源名称过滤获取真实表名称.
-     *
-     * @param targetDataSources 数据源名称
-     * @return 真实表名称
-     */
-    public Collection<String> getActualTableNames(final Collection<String> targetDataSources) {
-        Collection<String> result = new LinkedHashSet<>(actualTables.size());
-        for (DataNode each : actualTables) {
-            if (targetDataSources.contains(each.getDataSourceName())) {
+
+    public Collection<String> getActualTableNames(Collection<String> targetDataSources) {
+        LinkedHashSet result = new LinkedHashSet(this.actualTables.size());
+        Iterator i$ = this.actualTables.iterator();
+
+        while(i$.hasNext()) {
+            DataNode each = (DataNode)i$.next();
+            if(targetDataSources.contains(each.getDataSourceName())) {
                 result.add(each.getTableName());
             }
         }
         return result;
     }
-    
-    int findActualTableIndex(final String dataSourceName, final String actualTableName) {
+
+    int findActualTableIndex(String dataSourceName, String actualTableName) {
         int result = 0;
-        for (DataNode each : actualTables) {
-            if (each.getDataSourceName().equalsIgnoreCase(dataSourceName) && each.getTableName().equalsIgnoreCase(actualTableName)) {
+
+        for(Iterator i$ = this.actualTables.iterator(); i$.hasNext(); ++result) {
+            DataNode each = (DataNode)i$.next();
+            if(each.getDataSourceName().equalsIgnoreCase(dataSourceName) && each.getTableName().equalsIgnoreCase(actualTableName)) {
                 return result;
             }
-            result++;
         }
         return -1;
     }
-    
-    /**
-     * 表规则配置对象构建器.
-     */
-    @RequiredArgsConstructor
+
+    public String getLogicTable() {
+        return this.logicTable;
+    }
+
+    public boolean isDynamic() {
+        return this.dynamic;
+    }
+
+    public List<DataNode> getActualTables() {
+        return this.actualTables;
+    }
+
+    public void setActualTables(List<DataNode> actualTables) {
+        this.actualTables = actualTables;
+    }
+
+    public DatabaseShardingStrategy getDatabaseShardingStrategy() {
+        return this.databaseShardingStrategy;
+    }
+
+    public TableShardingStrategy getTableShardingStrategy() {
+        return this.tableShardingStrategy;
+    }
+
+    public String getGenerateKeyColumn() {
+        return this.generateKeyColumn;
+    }
+
+    public KeyGenerator getKeyGenerator() {
+        return this.keyGenerator;
+    }
+
+    public String toString() {
+        return "TableRule(logicTable=" + this.getLogicTable() + ", dynamic=" + this.isDynamic() + ", actualTables=" + this.getActualTables() + ", databaseShardingStrategy=" + this.getDatabaseShardingStrategy() + ", tableShardingStrategy=" + this.getTableShardingStrategy() + ", generateKeyColumn=" + this.getGenerateKeyColumn() + ", keyGenerator=" + this.getKeyGenerator() + ")";
+    }
+
     public static class TableRuleBuilder {
-        
-        private final String logicTable;
-        
+        private String logicTable;
         private boolean dynamic;
-        
         private List<String> actualTables;
-        
         private DataSourceRule dataSourceRule;
-        
         private Collection<String> dataSourceNames;
-        
         private DatabaseShardingStrategy databaseShardingStrategy;
-        
         private TableShardingStrategy tableShardingStrategy;
-        
         private String generateKeyColumn;
-        
         private Class<? extends KeyGenerator> keyGeneratorClass;
-        
-        /**
-         * 构建是否为动态表.
-         *
-         * @param dynamic 是否为动态表
-         * @return 真实表集合
-         */
-        public TableRuleBuilder dynamic(final boolean dynamic) {
+
+        public TableRule.TableRuleBuilder dynamic(boolean dynamic) {
             this.dynamic = dynamic;
             return this;
         }
-        
-        /**
-         * 构建真实表集合.
-         *
-         * @param actualTables 真实表集合
-         * @return 真实表集合
-         */
-        public TableRuleBuilder actualTables(final List<String> actualTables) {
+
+        public TableRule.TableRuleBuilder actualTables(List<String> actualTables) {
             this.actualTables = actualTables;
             return this;
         }
-        
-        /**
-         * 构建数据源分片规则.
-         *
-         * @param dataSourceRule 数据源分片规则
-         * @return 规则配置对象构建器
-         */
-        public TableRuleBuilder dataSourceRule(final DataSourceRule dataSourceRule) {
+
+        public TableRule.TableRuleBuilder dataSourceRule(DataSourceRule dataSourceRule) {
             this.dataSourceRule = dataSourceRule;
             return this;
         }
-        
-        /**
-         * 构建数据源分片规则.
-         *
-         * @param dataSourceNames 数据源名称集合
-         * @return 规则配置对象构建器
-         */
-        public TableRuleBuilder dataSourceNames(final Collection<String> dataSourceNames) {
+
+        public TableRule.TableRuleBuilder dataSourceNames(Collection<String> dataSourceNames) {
             this.dataSourceNames = dataSourceNames;
             return this;
         }
-        
-        /**
-         * 构建数据库分片策略.
-         *
-         * @param databaseShardingStrategy 数据库分片策略
-         * @return 规则配置对象构建器
-         */
-        public TableRuleBuilder databaseShardingStrategy(final DatabaseShardingStrategy databaseShardingStrategy) {
+
+        public TableRule.TableRuleBuilder databaseShardingStrategy(DatabaseShardingStrategy databaseShardingStrategy) {
             this.databaseShardingStrategy = databaseShardingStrategy;
             return this;
         }
-        
-        /**
-         * 构建表分片策略.
-         *
-         * @param tableShardingStrategy 表分片策略
-         * @return 规则配置对象构建器
-         */
-        public TableRuleBuilder tableShardingStrategy(final TableShardingStrategy tableShardingStrategy) {
+
+        public TableRule.TableRuleBuilder tableShardingStrategy(TableShardingStrategy tableShardingStrategy) {
             this.tableShardingStrategy = tableShardingStrategy;
             return this;
         }
-        
-        /**
-         * 自增列.
-         * 
-         * @param generateKeyColumn 自增列名称
-         * @return 规则配置对象构建器
-         */
-        public TableRuleBuilder generateKeyColumn(final String generateKeyColumn) {
+
+        public TableRule.TableRuleBuilder generateKeyColumn(String generateKeyColumn) {
             this.generateKeyColumn = generateKeyColumn;
             return this;
         }
-        
-        /**
-         * 自增列.
-         *
-         * @param generateKeyColumn 自增列名称
-         * @param keyGeneratorClass 列主键生成器类
-         * @return 规则配置对象构建器
-         */
-        public TableRuleBuilder generateKeyColumn(final String generateKeyColumn, final Class<? extends KeyGenerator> keyGeneratorClass) {
+
+        public TableRule.TableRuleBuilder generateKeyColumn(String generateKeyColumn, Class<? extends KeyGenerator> keyGeneratorClass) {
             this.generateKeyColumn = generateKeyColumn;
             this.keyGeneratorClass = keyGeneratorClass;
             return this;
         }
-        
-        /**
-         * 构建表规则配置对象.
-         *
-         * @return 表规则配置对象
-         */
+
         public TableRule build() {
             KeyGenerator keyGenerator = null;
-            if (null != generateKeyColumn && null != keyGeneratorClass) {
-                keyGenerator = KeyGeneratorFactory.createKeyGenerator(keyGeneratorClass);
+            if(null != this.generateKeyColumn && null != this.keyGeneratorClass) {
+                keyGenerator = KeyGeneratorFactory.createKeyGenerator(this.keyGeneratorClass);
             }
-            return new TableRule(logicTable, dynamic, actualTables, dataSourceRule, dataSourceNames, databaseShardingStrategy, tableShardingStrategy, generateKeyColumn, keyGenerator);
+
+            return new TableRule(this.logicTable, this.dynamic, this.actualTables, this.dataSourceRule, this.dataSourceNames, this.databaseShardingStrategy, this.tableShardingStrategy, this.generateKeyColumn, keyGenerator);
+        }
+
+        @ConstructorProperties({"logicTable"})
+        public TableRuleBuilder(String logicTable) {
+            this.logicTable = logicTable;
         }
     }
 }

@@ -7,9 +7,6 @@
     <file url="file://$PROJECT_DIR$/sharding-jdbc-config-parent/sharding-jdbc-config-spring" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sharding-jdbc-config-parent/sharding-jdbc-config-yaml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sharding-jdbc-core" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sharding-jdbc-transaction-parent" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sharding-jdbc-transaction-parent/sharding-jdbc-transaction" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sharding-jdbc-transaction-parent/sharding-jdbc-transaction-async-job" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sharding-jdbc-transaction-parent/sharding-jdbc-transaction-storage" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sharding-jdbc-test" charset="UTF-8" />
   </component>
 </project>

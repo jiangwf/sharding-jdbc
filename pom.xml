@@ -9,6 +9,7 @@
     <modules>
         <module>sharding-jdbc-core</module>
         <module>sharding-jdbc-config-parent</module>
+        <module>sharding-jdbc-test</module>
     </modules>
     
     <properties>
