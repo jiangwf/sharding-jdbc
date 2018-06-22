@@ -62,6 +62,7 @@
 /Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-core/src/main/java/com/dangdang/ddframe/rdb/sharding/merger/common/AbstractMemoryResultSetMerger.java
 /Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-core/src/main/java/com/dangdang/ddframe/rdb/sharding/jdbc/core/resultset/ShardingResultSet.java
 /Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-core/src/main/java/com/dangdang/ddframe/rdb/sharding/api/strategy/database/DatabaseShardingAlgorithm.java
+/Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-core/src/main/java/com/dangdang/ddframe/rdb/sharding/util/Constant.java
 /Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-core/src/main/java/com/dangdang/ddframe/rdb/sharding/constant/ShardingOperator.java
 /Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-core/src/main/java/com/dangdang/ddframe/rdb/sharding/parsing/parser/dialect/mysql/MySQLSelectParser.java
 /Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-core/src/main/java/com/dangdang/ddframe/rdb/sharding/api/rule/DataNode.java

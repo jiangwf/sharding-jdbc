@@ -146,6 +146,7 @@ com/dangdang/ddframe/rdb/sharding/api/rule/ShardingRule.class
 com/dangdang/ddframe/rdb/sharding/parsing/parser/context/selectitem/AggregationSelectItem.class
 com/dangdang/ddframe/rdb/sharding/parsing/parser/dialect/oracle/OracleInsertParser.class
 com/dangdang/ddframe/rdb/sharding/executor/type/batch/BatchPreparedStatementUnit.class
+com/dangdang/ddframe/rdb/sharding/util/Constant.class
 com/dangdang/ddframe/rdb/sharding/executor/event/DQLExecutionEvent.class
 com/dangdang/ddframe/rdb/sharding/executor/type/statement/StatementExecutor$3.class
 com/dangdang/ddframe/rdb/sharding/jdbc/adapter/AbstractResultSetAdapter.class
