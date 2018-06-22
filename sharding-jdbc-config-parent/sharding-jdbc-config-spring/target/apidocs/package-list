@@ -1,4 +1,0 @@
-com.dangdang.ddframe.rdb.sharding.spring.datasource
-com.dangdang.ddframe.rdb.sharding.spring.namespace.constants
-com.dangdang.ddframe.rdb.sharding.spring.namespace.handler
-com.dangdang.ddframe.rdb.sharding.spring.namespace.parser
