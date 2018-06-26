@@ -3,13 +3,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdb="http://www.dangdang.com/schema/ddframe/rdb"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.dangdang.com/schema/ddframe/rdb http://www.dangdang.com/schema/ddframe/rdb/rdb.xsd">
 
-       <rdb:strategy id="databaseStrategy" sharding-columns="company_code" algorithm-class="com.dangdang.sharidng.test.util.DatabaseShardingAlgorithm"/>
+       <rdb:strategy id="databaseStrategy" sharding-columns="company_code" algorithm-class="com.dangdang.sharding.test.util.DatabaseShardingAlgorithm"/>
        <rdb:strategy id="userTableStrategy" sharding-columns="create_time" algorithm-expression="user_${create_time.toString(&quot;yyyyMM&quot;)}"/>
 
        <rdb:data-source id="shardingDataSource">
-                      <rdb:sharding-rule data-sources="sharding,shardingTestA,shardingTestB">
+                      <rdb:sharding-rule data-sources="sharding,sharding_testa,sharding_testb">
                          <rdb:table-rules>
-                            <rdb:table-rule dynamic="true" logic-table="user" actual-tables="201805@sharding-testa-sharding-testb" database-strategy="databaseStrategy" table-strategy="userTableStrategy" />
+                            <rdb:table-rule dynamic="true" logic-table="user" actual-tables="201805@sharding_testa-sharding_testb" database-strategy="databaseStrategy" table-strategy="userTableStrategy" />
 
                      </rdb:table-rules>
                      <rdb:default-database-strategy sharding-columns="none" algorithm-class="com.dangdang.ddframe.rdb.sharding.api.strategy.database.NoneDatabaseShardingAlgorithm"/>
