@@ -1,7 +1,8 @@
-package com.dangdang.sharding.unit.util;
+package com.dangdang.sharding.unit.sharidng;
 
 import com.dangdang.ddframe.rdb.sharding.api.ShardingValue;
 import com.dangdang.ddframe.rdb.sharding.api.strategy.database.SingleKeyDatabaseShardingAlgorithm;
+import com.dangdang.sharding.unit.util.BusException;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
