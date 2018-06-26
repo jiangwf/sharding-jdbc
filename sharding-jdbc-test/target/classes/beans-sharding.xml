@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdb="http://www.dangdang.com/schema/ddframe/rdb"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.dangdang.com/schema/ddframe/rdb http://www.dangdang.com/schema/ddframe/rdb/rdb.xsd">
 
-       <rdb:strategy id="databaseStrategy" sharding-columns="company_code" algorithm-class="com.dangdang.sharidng.test.util.DatabaseShardingAlgorithm"/>
+       <rdb:strategy id="databaseStrategy" sharding-columns="company_code" algorithm-class="com.dangdang.sharding.test.util.DatabaseShardingAlgorithm"/>
        <rdb:strategy id="userTableStrategy" sharding-columns="create_time" algorithm-expression="user_${create_time.toString(&quot;yyyyMM&quot;)}"/>
 
        <rdb:data-source id="shardingDataSource">

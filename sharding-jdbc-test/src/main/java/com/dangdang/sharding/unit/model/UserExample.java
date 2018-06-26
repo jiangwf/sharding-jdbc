@@ -1,4 +1,4 @@
-package com.dangdang.sharding.test.model;
+package com.dangdang.sharding.unit.model;
 
 import java.util.ArrayList;
 import java.util.Date;

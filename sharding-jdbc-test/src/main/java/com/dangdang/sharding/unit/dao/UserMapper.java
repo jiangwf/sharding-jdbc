@@ -1,7 +1,7 @@
-package com.dangdang.sharding.test.dao;
+package com.dangdang.sharding.unit.dao;
 
-import com.dangdang.sharding.test.model.User;
-import com.dangdang.sharding.test.model.UserExample;
+import com.dangdang.sharding.unit.model.User;
+import com.dangdang.sharding.unit.model.UserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

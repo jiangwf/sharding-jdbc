@@ -4,7 +4,7 @@
  * Copyright (c) 2015, Youjie8 and/or its affiliates. All rights reserved.
  * Youjie8 PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
-package com.dangdang.sharding.test.util;
+package com.dangdang.sharding.unit.util;
 
 
 public class BusException extends RuntimeException {

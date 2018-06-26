@@ -1,4 +1,4 @@
-package com.dangdang.sharding.test.util;
+package com.dangdang.sharding.unit.util;
 
 import com.dangdang.ddframe.rdb.sharding.api.ShardingValue;
 import com.dangdang.ddframe.rdb.sharding.api.strategy.database.SingleKeyDatabaseShardingAlgorithm;

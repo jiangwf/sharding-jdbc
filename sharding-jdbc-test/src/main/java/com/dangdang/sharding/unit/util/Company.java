@@ -1,4 +1,4 @@
-package com.dangdang.sharding.test.util;
+package com.dangdang.sharding.unit.util;
 
 /**
  * weifeng.jiang 2018-06-22 18:10

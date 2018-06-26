@@ -1,10 +1,10 @@
-package com.dangdang.sharding.test.unit.dao;
+package com.dangdang.sharding.test.dao;
 
-import com.dangdang.sharding.test.dao.UserMapper;
-import com.dangdang.sharding.test.model.User;
-import com.dangdang.sharding.test.model.UserExample;
-import com.dangdang.sharding.test.unit.AppTest;
-import com.dangdang.sharding.test.util.Company;
+import com.dangdang.sharding.unit.dao.UserMapper;
+import com.dangdang.sharding.unit.model.User;
+import com.dangdang.sharding.unit.model.UserExample;
+import com.dangdang.sharding.test.AppTest;
+import com.dangdang.sharding.unit.util.Company;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,11 +36,16 @@ public class UserDaoTest extends AppTest {
     }
 
     @Test
-    public void update(){
+    public void testUpdate(){
         User user = new User();
         user.setAge(40L);
         UserExample userExample = new UserExample();
-        userExample.createCriteria().andIdEqualTo(2L);
+        userExample.createCriteria().andIdEqualTo(20L);
         userMapper.updateByExampleSelective(user,userExample);
+    }
+
+    @Test
+    public void testSelect(){
+
     }
 }

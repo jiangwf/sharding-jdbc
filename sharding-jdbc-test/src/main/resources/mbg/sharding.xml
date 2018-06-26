@@ -22,7 +22,7 @@
 			<property name="forceBigDecimals" value="false" />
 		</javaTypeResolver>
 		<!-- 生成模型的包名和位置 -->
-		<javaModelGenerator targetPackage="com.dangdang.sharding.test.model" targetProject="../../java">
+		<javaModelGenerator targetPackage="com.dangdang.sharding.unit.model" targetProject="../../java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
@@ -33,7 +33,7 @@
 		<!-- 生成DAO的包名和位置 -->
 		<!-- type=ANNOTATEDMAPPER 或 XMLMAPPER -->
 		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="com.dangdang.sharding.test.dao" targetProject="../../java">
+			targetPackage="com.dangdang.sharding.unit.dao" targetProject="../../java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		
