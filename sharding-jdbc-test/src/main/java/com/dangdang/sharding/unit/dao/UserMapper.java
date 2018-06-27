@@ -2,8 +2,9 @@ package com.dangdang.sharding.unit.dao;
 
 import com.dangdang.sharding.unit.model.User;
 import com.dangdang.sharding.unit.model.UserExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UserMapper {
     /**

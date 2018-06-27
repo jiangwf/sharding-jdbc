@@ -7,7 +7,7 @@
 
     <context:annotation-config/>
 
-    <context:component-scan base-package="com.dangdang.sharding.test">
+    <context:component-scan base-package="com.dangdang.sharding.unit">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
@@ -48,7 +48,7 @@
     <tx:annotation-driven transaction-manager="tradeTransactionManager" />
 
     <bean id="trainingMapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.dangdang.sharding.test.dao" />
+        <property name="basePackage" value="com.dangdang.sharding.unit.dao" />
         <property name="processPropertyPlaceHolders" value="true" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
