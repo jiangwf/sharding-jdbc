@@ -60,7 +60,8 @@ public abstract class AbstractUpdateParser implements SQLStatementParser {
     protected abstract void skipBetweenUpdateAndTable();
     
     private void parseSetItems() {
-        sqlParser.accept(DefaultKeyword.SET);
+//        sqlParser.accept(DefaultKeyword.SET); modify by weifeng.jiang 支持force index
+        sqlParser.skipIfEqual(DefaultKeyword.SET);
         do {
             parseSetItem();
         } while (sqlParser.skipIfEqual(Symbol.COMMA));

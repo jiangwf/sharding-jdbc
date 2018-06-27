@@ -60,4 +60,30 @@ public class UserDaoTest extends AppTest {
     public void testDelete() {
         userService.deleteUser();
     }
+
+    @Test
+    public void testSelectForceIndex(){
+        User user = new User();
+        user.setName("zs");
+        List<User> users = userDao.selectForceIndex(user);
+        for (User user1 : users) {
+            System.out.println(user1.getAge()+","+user1.getName());
+        }
+    }
+
+    @Test
+    public void testUpdateForceIndex(){
+        User user = new User();
+        user.setName("zs");
+        user.setAge(99L);
+        userDao.updateForceIndex(user);
+    }
+
+    @Test
+    public void testUpdateUser(){
+        User user = new User();
+        user.setName("zs");
+        user.setAge(70L);
+        userDao.updateForceIndex(user);
+    }
 }
