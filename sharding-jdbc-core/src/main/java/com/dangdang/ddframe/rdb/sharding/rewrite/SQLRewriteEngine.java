@@ -23,11 +23,7 @@ import com.dangdang.ddframe.rdb.sharding.api.rule.ShardingRule;
 import com.dangdang.ddframe.rdb.sharding.parsing.parser.context.limit.Limit;
 import com.dangdang.ddframe.rdb.sharding.parsing.parser.statement.SQLStatement;
 import com.dangdang.ddframe.rdb.sharding.parsing.parser.statement.select.SelectStatement;
-import com.dangdang.ddframe.rdb.sharding.parsing.parser.token.ItemsToken;
-import com.dangdang.ddframe.rdb.sharding.parsing.parser.token.OffsetToken;
-import com.dangdang.ddframe.rdb.sharding.parsing.parser.token.RowCountToken;
-import com.dangdang.ddframe.rdb.sharding.parsing.parser.token.SQLToken;
-import com.dangdang.ddframe.rdb.sharding.parsing.parser.token.TableToken;
+import com.dangdang.ddframe.rdb.sharding.parsing.parser.token.*;
 import com.dangdang.ddframe.rdb.sharding.routing.type.TableUnit;
 import com.dangdang.ddframe.rdb.sharding.routing.type.complex.CartesianTableReference;
 import com.google.common.base.Optional;
@@ -43,6 +39,7 @@ import java.util.Map;
  * SQL重写引擎.
  *
  * @author zhangliang
+ * @author weifeng.jiang
  */
 public final class SQLRewriteEngine {
     
@@ -87,12 +84,31 @@ public final class SQLRewriteEngine {
                 appendLimitRowCount(result, (RowCountToken) each, count, sqlTokens, isRewriteLimit);
             } else if (each instanceof OffsetToken) {
                 appendLimitOffsetToken(result, (OffsetToken) each, count, sqlTokens, isRewriteLimit);
+//                add by weifeng.jiang
+            } else if(each instanceof IndexToken){
+                appendIndexToken(result,(IndexToken) each,count,sqlTokens);
             }
             count++;
         }
         return result;
     }
-    
+
+    /**
+     * sql拼装index token
+     * weifeng.jiang
+     *
+     * @param sqlBuilder
+     * @param indexToken
+     * @param count
+     * @param sqlTokens
+     */
+    private void appendIndexToken(final SQLBuilder sqlBuilder, IndexToken indexToken, int count, List<SQLToken> sqlTokens) {
+        sqlBuilder.appendLiterals(indexToken.getOriginalLiterals());
+        int beginPosition = indexToken.getBeginPosition() + indexToken.getOriginalLiterals().length();
+        int endPosition = sqlTokens.size() - 1 == count ? originalSQL.length() : sqlTokens.get(count + 1).getBeginPosition();
+        sqlBuilder.appendLiterals(originalSQL.substring(beginPosition, endPosition));
+    }
+
     private void sortByBeginPosition() {
         Collections.sort(sqlTokens, new Comparator<SQLToken>() {
             

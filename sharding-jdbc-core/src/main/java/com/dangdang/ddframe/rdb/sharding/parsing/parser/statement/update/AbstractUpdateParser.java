@@ -21,6 +21,7 @@ import com.dangdang.ddframe.rdb.sharding.parsing.lexer.token.DefaultKeyword;
 import com.dangdang.ddframe.rdb.sharding.parsing.lexer.token.Symbol;
 import com.dangdang.ddframe.rdb.sharding.parsing.parser.SQLParser;
 import com.dangdang.ddframe.rdb.sharding.parsing.parser.statement.SQLStatementParser;
+import com.dangdang.ddframe.rdb.sharding.parsing.parser.token.IndexToken;
 import com.dangdang.ddframe.rdb.sharding.parsing.parser.token.TableToken;
 import com.dangdang.ddframe.rdb.sharding.util.SQLUtil;
 import lombok.AccessLevel;
@@ -30,6 +31,7 @@ import lombok.Getter;
  * Update语句解析器.
  *
  * @author zhangliang
+ * @author weifeng.jiang
  */
 @Getter(AccessLevel.PROTECTED)
 public abstract class AbstractUpdateParser implements SQLStatementParser {
@@ -50,18 +52,34 @@ public abstract class AbstractUpdateParser implements SQLStatementParser {
         sqlParser.getLexer().nextToken();
         skipBetweenUpdateAndTable();
         sqlParser.parseSingleTable(updateStatement);
+//        add by weifeng.jiang
+        parseForceIndex();
         parseSetItems();
         sqlParser.skipUntil(DefaultKeyword.WHERE);
         sqlParser.setParametersIndex(parametersIndex);
         sqlParser.parseWhere(updateStatement);
         return updateStatement;
     }
-    
+
+    /**
+     * update force index支持
+     * weifeng.jiang
+     */
+    private void parseForceIndex() {
+        sqlParser.acceptForceOrIndex(DefaultKeyword.FORCE);
+        sqlParser.acceptForceOrIndex(DefaultKeyword.INDEX);
+        sqlParser.skipIfEqual(Symbol.LEFT_PAREN);
+        int beginPosition = sqlParser.getLexer().getCurrentToken().getEndPosition();
+        String literals = sqlParser.getLexer().getCurrentToken().getLiterals();
+        updateStatement.getSqlTokens().add(new IndexToken(beginPosition-literals.length(),literals));
+        sqlParser.getLexer().nextToken();
+        sqlParser.skipIfEqual(Symbol.RIGHT_PAREN);
+    }
+
     protected abstract void skipBetweenUpdateAndTable();
     
     private void parseSetItems() {
-//        sqlParser.accept(DefaultKeyword.SET); modify by weifeng.jiang 支持force index
-        sqlParser.skipIfEqual(DefaultKeyword.SET);
+        sqlParser.accept(DefaultKeyword.SET);
         do {
             parseSetItem();
         } while (sqlParser.skipIfEqual(Symbol.COMMA));

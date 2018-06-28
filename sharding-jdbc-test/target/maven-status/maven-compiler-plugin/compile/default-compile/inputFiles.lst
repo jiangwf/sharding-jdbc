@@ -1,1 +1,14 @@
-/Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-test/src/main/java/com/dangdang/sharidng/test/package-info.java
+/Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-test/src/main/java/com/dangdang/sharding/unit/service/UserService.java
+/Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-test/src/main/java/com/dangdang/sharding/unit/dao/package-info.java
+/Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-test/src/main/java/com/dangdang/sharding/unit/dao/UserMapper.java
+/Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-test/src/main/java/com/dangdang/sharding/unit/model/UserExample.java
+/Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-test/src/main/java/com/dangdang/sharding/unit/util/Company.java
+/Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-test/src/main/java/com/dangdang/sharding/unit/util/package-info.java
+/Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-test/src/main/java/com/dangdang/sharding/unit/model/package-info.java
+/Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-test/src/main/java/com/dangdang/sharding/unit/dao/UserDao.java
+/Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-test/src/main/java/com/dangdang/sharding/unit/service/UserServiceImpl.java
+/Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-test/src/main/java/com/dangdang/sharding/unit/util/BusException.java
+/Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-test/src/main/java/com/dangdang/sharding/unit/enums/package-info.java
+/Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-test/src/main/java/com/dangdang/sharding/unit/service/package-info.java
+/Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-test/src/main/java/com/dangdang/sharding/unit/model/User.java
+/Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-test/src/main/java/com/dangdang/sharding/unit/sharidng/DatabaseShardingAlgorithm.java

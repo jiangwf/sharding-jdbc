@@ -104,7 +104,19 @@ public abstract class AbstractParser {
         }
         lexer.nextToken();
     }
-    
+
+    /**
+     * 判断是否是force index token
+     * weifeng.jiang
+     * @param tokenType
+     */
+    public final void acceptForceOrIndex(final TokenType tokenType) {
+        if (!(lexer.getCurrentToken().getType().toString().equals(tokenType.toString()))) {
+            throw new SQLParsingException(lexer, tokenType);
+        }
+        lexer.nextToken();
+    }
+
     /**
      * 判断当前词法标记类型是否与其中一个传入值相等.
      *

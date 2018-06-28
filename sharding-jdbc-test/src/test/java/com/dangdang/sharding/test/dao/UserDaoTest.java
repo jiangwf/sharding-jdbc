@@ -83,7 +83,7 @@ public class UserDaoTest extends AppTest {
     public void testUpdateUser(){
         User user = new User();
         user.setName("zs");
-        user.setAge(70L);
+        user.setAge(90L);
         userDao.updateForceIndex(user);
     }
 }

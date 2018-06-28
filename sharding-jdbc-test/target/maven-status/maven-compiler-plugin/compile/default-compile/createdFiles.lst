@@ -1,0 +1,12 @@
+com/dangdang/sharding/unit/model/UserExample.class
+com/dangdang/sharding/unit/util/Company.class
+com/dangdang/sharding/unit/model/UserExample$Criterion.class
+com/dangdang/sharding/unit/service/UserServiceImpl.class
+com/dangdang/sharding/unit/service/UserService.class
+com/dangdang/sharding/unit/model/User.class
+com/dangdang/sharding/unit/model/UserExample$Criteria.class
+com/dangdang/sharding/unit/dao/UserMapper.class
+com/dangdang/sharding/unit/model/UserExample$GeneratedCriteria.class
+com/dangdang/sharding/unit/sharidng/DatabaseShardingAlgorithm.class
+com/dangdang/sharding/unit/dao/UserDao.class
+com/dangdang/sharding/unit/util/BusException.class
