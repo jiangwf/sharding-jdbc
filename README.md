@@ -1,14 +1,6 @@
 # Sharding-JDBC - JDBC driver for shard databases and tables 
 
-# [中文主页](http://dangdangdotcom.github.io/sharding-jdbc)
-
-[![Build Status](https://secure.travis-ci.org/dangdangdotcom/sharding-jdbc.png?branch=master)](https://travis-ci.org/dangdangdotcom/sharding-jdbc)
-[![Maven Status](https://maven-badges.herokuapp.com/maven-central/com.dangdang/sharding-jdbc/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.dangdang/sharding-jdbc)
-[![Coverage Status](https://coveralls.io/repos/dangdangdotcom/sharding-jdbc/badge.svg?branch=master&service=github)](https://coveralls.io/github/dangdangdotcom/sharding-jdbc?branch=master)
-[![GitHub release](https://img.shields.io/github/release/dangdangdotcom/sharding-jdbc.svg)](https://github.com/dangdangdotcom/sharding-jdbc/releases)
-[![Hex.pm](http://dangdangdotcom.github.io/sharding-jdbc/img/license.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
-
-# 基于sharding-jdbc定制化扩展功能
+# 基于sharding-jdbc1.5.0.M3定制化扩展功能
 
 * 基于时间分表的分片规则自动扩容
 * 修复获取metaData时获取事务失败的问题 modify by weifeng.jiang
