@@ -8,6 +8,13 @@
 [![GitHub release](https://img.shields.io/github/release/dangdangdotcom/sharding-jdbc.svg)](https://github.com/dangdangdotcom/sharding-jdbc/releases)
 [![Hex.pm](http://dangdangdotcom.github.io/sharding-jdbc/img/license.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
+# 基于sharding-jdbc定制化扩展功能
+
+1、基于时间分表的分片规则自动扩容
+2、修复获取metaData时获取事务失败的问题 modify by weifeng.jiang
+3、group by的时候Date类型会报错对象没有实现comparable接口 modify by yibing.dong
+4、update force index支持 add by weifeng.jiang
+
 # Overview
 
 Sharding-JDBC is a JDBC extension, provides distributed features such as sharding, read/write splitting and BASE transaction.
@@ -138,12 +145,4 @@ try (
         </rdb:sharding-rule>
     </rdb:data-source>
 </beans>
-
-
-## 基于sharding-jdbc定制化
-
-1、基于时间分表的分片规则自动扩容
-2、修复获取metaData时获取事务失败的问题 modify by weifeng.jiang
-3、group by的时候Date类型会报错对象没有实现comparable接口 modify by yibing.dong
-4、update force index支持 add by weifeng.jiang
 ```
