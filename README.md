@@ -10,10 +10,10 @@
 
 # 基于sharding-jdbc定制化扩展功能
 
-1、基于时间分表的分片规则自动扩容
-2、修复获取metaData时获取事务失败的问题 modify by weifeng.jiang
-3、group by的时候Date类型会报错对象没有实现comparable接口 modify by yibing.dong
-4、update force index支持 add by weifeng.jiang
+* 基于时间分表的分片规则自动扩容
+* 修复获取metaData时获取事务失败的问题 modify by weifeng.jiang
+* group by的时候Date类型会报错对象没有实现comparable接口 modify by yibing.dong
+* update force index支持 add by weifeng.jiang
 
 # Overview
 
