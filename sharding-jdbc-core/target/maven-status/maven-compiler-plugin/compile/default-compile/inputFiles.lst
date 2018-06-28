@@ -72,6 +72,7 @@
 /Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-core/src/main/java/com/dangdang/ddframe/rdb/sharding/routing/router/UnparsingSQLRouter.java
 /Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-core/src/main/java/com/dangdang/ddframe/rdb/sharding/jdbc/core/datasource/MasterSlaveDataSource.java
 /Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-core/src/main/java/com/dangdang/ddframe/rdb/sharding/parsing/parser/token/TableToken.java
+/Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-core/src/main/java/com/dangdang/ddframe/rdb/sharding/parsing/parser/token/IndexToken.java
 /Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-core/src/main/java/com/dangdang/ddframe/rdb/sharding/merger/groupby/GroupByMemoryResultSetMerger.java
 /Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-core/src/main/java/com/dangdang/ddframe/rdb/sharding/parsing/parser/expression/SQLIgnoreExpression.java
 /Users/jiangweifeng/opensourceproject/sharding-jdbc/sharding-jdbc-core/src/main/java/com/dangdang/ddframe/rdb/sharding/parsing/parser/context/selectitem/SelectItem.java
