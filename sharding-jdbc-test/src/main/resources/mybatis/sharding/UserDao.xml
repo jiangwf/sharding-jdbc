@@ -27,6 +27,6 @@
     </update>
 
     <update id="updateUser" parameterType="com.dangdang.sharding.unit.model.User">
-        update user FORCE INDEX(index_name) set age=#{age} where name = #{name};
+        update user set age=#{age} where name = #{name};
     </update>
 </mapper>
