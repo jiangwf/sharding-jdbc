@@ -53,7 +53,9 @@ public abstract class AbstractUpdateParser implements SQLStatementParser {
         skipBetweenUpdateAndTable();
         sqlParser.parseSingleTable(updateStatement);
 //        add by weifeng.jiang
-        parseForceIndex();
+        if(sqlParser.getLexer().getInput().indexOf(DefaultKeyword.FORCE.toString())!=-1){
+            parseForceIndex();
+        }
         parseSetItems();
         sqlParser.skipUntil(DefaultKeyword.WHERE);
         sqlParser.setParametersIndex(parametersIndex);
