@@ -6,6 +6,7 @@
 * 修复获取metaData时获取事务失败的问题 modify by weifeng.jiang
 * group by的时候Date类型会报错对象没有实现comparable接口 modify by yibing.dong
 * update force index支持 add by weifeng.jiang
+* 修复SimpleRoutingEngine结果集汇总bug
 
 # Overview
 
