@@ -41,7 +41,7 @@ public abstract class AbstractConnectionAdapter extends AbstractUnsupportedOpera
 
     private boolean closed;
 
-    private int transactionIsolation = TRANSACTION_READ_UNCOMMITTED;
+    private int transactionIsolation = TRANSACTION_READ_COMMITTED;
 
     protected abstract Collection<Connection> getConnections();
 

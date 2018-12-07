@@ -26,10 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.beans.ConstructorProperties;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public final class SimpleRoutingEngine implements RoutingEngine {
     private static final Logger log = LoggerFactory.getLogger(SimpleRoutingEngine.class);
@@ -148,17 +145,16 @@ public final class SimpleRoutingEngine implements RoutingEngine {
                 DataNode each = (DataNode)i$.next();
                 if(!shardingValues.isEmpty() && shardingValues.size()>0){
                     for(ShardingValue shardingValue:shardingValues){
-                        if (shardingValue.getColumnName().equals("company_code")){
-                            if(each.getDataSourceName().endsWith(((String)shardingValue.getValue()).replace("-","_"))){
-                                result.getTableUnits().getTableUnits().add(new TableUnit(each.getDataSourceName(), this.logicTableName, each.getTableName()));
-                            }
-                        }else if (shardingValue.getColumnName().equals("package_id")){
-                            if(each.getDataSourceName().endsWith("01_0001") || each.getDataSourceName().endsWith("10_0001")){
-                                result.getTableUnits().getTableUnits().add(new TableUnit(each.getDataSourceName(), this.logicTableName, each.getTableName()));
-                            }
-                        }else {
-                            result.getTableUnits().getTableUnits().add(new TableUnit(each.getDataSourceName(), this.logicTableName, each.getTableName()));
-                        }
+//                        TODO 不支持 between分片策略
+//                        对=分片策略处理
+                      if((shardingValue.getValue() != null) && ((shardingValue.getValues() == null) || (shardingValue.getValues().size() == 0))){
+                          buildTableUnitList(result, each, shardingValue);
+//                          对in分片策略处理
+                      }else if((shardingValue.getValue() == null) && ((shardingValue.getValues() != null) && (shardingValue.getValues().size() > 0))){
+                          for (ShardingValue<?> value : shardingValues) {
+                              buildTableUnitList(result, each, value);
+                          }
+                      }
                     }
                 }else {
                     result.getTableUnits().getTableUnits().add(new TableUnit(each.getDataSourceName(), this.logicTableName, each.getTableName()));
@@ -166,6 +162,30 @@ public final class SimpleRoutingEngine implements RoutingEngine {
             }
         }
         return result;
+    }
+
+    /**
+     * 根据不同的分片策略构建tableUnitList
+     * @param result
+     * @param each
+     * @param shardingValue
+     */
+    private void buildTableUnitList(RoutingResult result, DataNode each, ShardingValue shardingValue) {
+        if (shardingValue.getColumnName().equals("company_code")){
+           if(((String)shardingValue.getValue()).indexOf("$") == -1){
+               if(each.getDataSourceName().endsWith(((String)shardingValue.getValue()).replace("-","_"))){
+                   result.getTableUnits().getTableUnits().add(new TableUnit(each.getDataSourceName(), this.logicTableName, each.getTableName()));
+               }
+           }else if(((String)shardingValue.getValue()).indexOf("$") != -1){
+               result.getTableUnits().getTableUnits().add(new TableUnit(each.getDataSourceName(), this.logicTableName, each.getTableName()));
+           }
+        }else if (shardingValue.getColumnName().equals("package_id")){
+            if(each.getDataSourceName().endsWith("01_0001") || each.getDataSourceName().endsWith("10_0001")){
+                result.getTableUnits().getTableUnits().add(new TableUnit(each.getDataSourceName(), this.logicTableName, each.getTableName()));
+            }
+        }else {
+            result.getTableUnits().getTableUnits().add(new TableUnit(each.getDataSourceName(), this.logicTableName, each.getTableName()));
+        }
     }
 
     @ConstructorProperties({"shardingRule", "parameters", "logicTableName", "sqlStatement"})

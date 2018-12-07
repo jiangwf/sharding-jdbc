@@ -20,11 +20,11 @@ package com.dangdang.ddframe.rdb.sharding.jdbc.core.connection;
 import com.codahale.metrics.Timer.Context;
 import com.dangdang.ddframe.rdb.sharding.constant.SQLType;
 import com.dangdang.ddframe.rdb.sharding.hint.HintManagerHolder;
-import com.dangdang.ddframe.rdb.sharding.jdbc.core.ShardingContext;
 import com.dangdang.ddframe.rdb.sharding.jdbc.adapter.AbstractConnectionAdapter;
+import com.dangdang.ddframe.rdb.sharding.jdbc.core.ShardingContext;
+import com.dangdang.ddframe.rdb.sharding.jdbc.core.datasource.MasterSlaveDataSource;
 import com.dangdang.ddframe.rdb.sharding.jdbc.core.statement.ShardingPreparedStatement;
 import com.dangdang.ddframe.rdb.sharding.jdbc.core.statement.ShardingStatement;
-import com.dangdang.ddframe.rdb.sharding.jdbc.core.datasource.MasterSlaveDataSource;
 import com.dangdang.ddframe.rdb.sharding.metrics.MetricsContext;
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
@@ -33,14 +33,10 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 支持分片的数据库连接.
@@ -54,7 +50,7 @@ public final class ShardingConnection extends AbstractConnectionAdapter {
     @Getter
     private final ShardingContext shardingContext;
     
-    private final Map<String, Connection> connectionMap = new HashMap<>();
+    private final Map<String, Connection> connectionMap = new ConcurrentHashMap<>();
     
     /**
      * 根据数据源名称获取相应的数据库连接.
