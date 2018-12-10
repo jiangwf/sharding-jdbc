@@ -12,6 +12,7 @@ import org.springframework.test.annotation.Rollback;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -49,6 +50,17 @@ public class UserDaoTest extends AppTest {
     @Test
     public void testSelect() {
         UserExample example = new UserExample();
+        example.createCriteria().andCompanyCodeEqualTo("testa");
+        List<User> users = userDao.selectByExample(example);
+        for (User user : users) {
+            System.out.println(user.getId() + "," + user.getAge());
+        }
+    }
+
+    @Test
+    public void testInSelect() {
+        UserExample example = new UserExample();
+        example.createCriteria().andCompanyCodeIn(Arrays.asList("testa","testb"));
         List<User> users = userDao.selectByExample(example);
         for (User user : users) {
             System.out.println(user.getId() + "," + user.getAge());

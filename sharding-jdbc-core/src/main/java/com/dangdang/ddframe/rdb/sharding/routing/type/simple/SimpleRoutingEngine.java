@@ -151,9 +151,11 @@ public final class SimpleRoutingEngine implements RoutingEngine {
                           buildTableUnitList(result, each, shardingValue);
 //                          对in分片策略处理
                       }else if((shardingValue.getValue() == null) && ((shardingValue.getValues() != null) && (shardingValue.getValues().size() > 0))){
-                          for (ShardingValue<?> value : shardingValues) {
-                              buildTableUnitList(result, each, value);
+                          for (int i=0;i<shardingValue.getValues().size();i++) {
+                              shardingValue.setValue((Comparable<?>) shardingValue.getValues().toArray()[i]);
+                              buildTableUnitList(result, each, shardingValue);
                           }
+                          shardingValue.setValue(null);
                       }
                     }
                 }else {

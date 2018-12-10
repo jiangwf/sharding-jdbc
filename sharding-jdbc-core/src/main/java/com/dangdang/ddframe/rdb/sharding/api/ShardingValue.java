@@ -20,10 +20,7 @@ package com.dangdang.ddframe.rdb.sharding.api;
 import java.util.Collection;
 import java.util.Collections;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import com.google.common.collect.Range;
 
@@ -45,8 +42,9 @@ public final class ShardingValue<T extends Comparable<?>> {
     private final String logicTableName;
     
     private final String columnName;
-    
-    private final T value;
+
+    @Setter
+    private T value;
     
     private final Collection<T> values;
     

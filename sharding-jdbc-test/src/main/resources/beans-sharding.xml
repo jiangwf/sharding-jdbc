@@ -9,7 +9,7 @@
        <rdb:data-source id="shardingDataSource">
                       <rdb:sharding-rule data-sources="sharding,sharding_testa,sharding_testb">
                          <rdb:table-rules>
-                            <rdb:table-rule dynamic="true" logic-table="user" actual-tables="201805@sharding_testa-201805@sharding_testb" database-strategy="databaseStrategy" table-strategy="userTableStrategy" />
+                            <rdb:table-rule dynamic="true" logic-table="user" actual-tables="sharding_testa-sharding_testb" database-strategy="databaseStrategy" table-strategy="userTableStrategy" />
 
                      </rdb:table-rules>
                      <rdb:default-database-strategy sharding-columns="none" algorithm-class="com.dangdang.ddframe.rdb.sharding.api.strategy.database.NoneDatabaseShardingAlgorithm"/>
