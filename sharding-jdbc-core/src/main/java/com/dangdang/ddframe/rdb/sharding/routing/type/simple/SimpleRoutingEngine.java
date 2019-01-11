@@ -177,6 +177,8 @@ public final class SimpleRoutingEngine implements RoutingEngine {
            if(((String)shardingValue.getValue()).indexOf("$") == -1){
                if(each.getDataSourceName().endsWith(((String)shardingValue.getValue()).replace("-","_"))){
                    result.getTableUnits().getTableUnits().add(new TableUnit(each.getDataSourceName(), this.logicTableName, each.getTableName()));
+               }else if("38-0001".equals((String)shardingValue.getValue())){
+                   result.getTableUnits().getTableUnits().add(new TableUnit("finance_05_0001", this.logicTableName, each.getTableName()));
                }
            }else if(((String)shardingValue.getValue()).indexOf("$") != -1){
                result.getTableUnits().getTableUnits().add(new TableUnit(each.getDataSourceName(), this.logicTableName, each.getTableName()));
