@@ -16,4 +16,6 @@ public interface UserDao extends UserMapper{
     void updateForceIndex(User user);
 
     void updateUser(User user);
+
+    List<User> selectList(User user);
 }

@@ -98,4 +98,11 @@ public class UserDaoTest extends AppTest {
         user.setAge(90L);
         userDao.updateUser(user);
     }
+
+    @Test
+    public void testSelectList(){
+        User user = new User();
+        user.setId(1L);
+        userDao.selectList(user);
+    }
 }

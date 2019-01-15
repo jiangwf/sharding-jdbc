@@ -29,4 +29,8 @@
     <update id="updateUser" parameterType="com.dangdang.sharding.unit.model.User">
         update user set age=#{age} where name = #{name};
     </update>
+
+    <select id="selectList" parameterType="com.dangdang.sharding.unit.model.User">
+      select t.* from user t,user_info f where t.id = f.user_id and f.user_id= #{id}
+    </select>
 </mapper>

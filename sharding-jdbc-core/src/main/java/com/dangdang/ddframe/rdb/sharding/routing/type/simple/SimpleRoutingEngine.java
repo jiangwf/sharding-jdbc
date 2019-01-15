@@ -181,7 +181,9 @@ public final class SimpleRoutingEngine implements RoutingEngine {
                    result.getTableUnits().getTableUnits().add(new TableUnit("finance_05_0001", this.logicTableName, each.getTableName()));
                }
            }else if(((String)shardingValue.getValue()).indexOf("$") != -1){
-               result.getTableUnits().getTableUnits().add(new TableUnit(each.getDataSourceName(), this.logicTableName, each.getTableName()));
+               if("finance_00_0001".equals(each.getDataSourceName())){
+                   result.getTableUnits().getTableUnits().add(new TableUnit(each.getDataSourceName(), this.logicTableName, each.getTableName()));
+               }
            }
         }else if (shardingValue.getColumnName().equals("package_id")){
             if(each.getDataSourceName().endsWith("01_0001") || each.getDataSourceName().endsWith("10_0001")){
