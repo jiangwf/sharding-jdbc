@@ -179,6 +179,10 @@ public final class SimpleRoutingEngine implements RoutingEngine {
                    result.getTableUnits().getTableUnits().add(new TableUnit(each.getDataSourceName(), this.logicTableName, each.getTableName()));
                }else if("38-0001".equals((String)shardingValue.getValue())){
                    result.getTableUnits().getTableUnits().add(new TableUnit("finance_05_0001", this.logicTableName, each.getTableName()));
+               }else if("11-0001".equals((String)shardingValue.getValue())){
+                   result.getTableUnits().getTableUnits().add(new TableUnit("finance_05_0001", this.logicTableName, each.getTableName()));
+               }else if("46-0001".equals((String)shardingValue.getValue())){
+                   result.getTableUnits().getTableUnits().add(new TableUnit("finance_05_0001", this.logicTableName, each.getTableName()));
                }
            }else if(((String)shardingValue.getValue()).indexOf("$") != -1){
                if("finance_00_0001".equals(each.getDataSourceName())){
