@@ -5,7 +5,7 @@
     <parent>
         <artifactId>sharding-jdbc</artifactId>
         <groupId>com.dangdang</groupId>
-        <version>1.5.5-ML</version>
+        <version>1.5.7-ML</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -95,17 +95,17 @@
         <dependency>
             <groupId>com.dangdang</groupId>
             <artifactId>sharding-jdbc-config-common</artifactId>
-            <version>1.5.5-ML</version>
+            <version>1.5.7-ML</version>
         </dependency>
         <dependency>
             <groupId>com.dangdang</groupId>
             <artifactId>sharding-jdbc-config-spring</artifactId>
-            <version>1.5.5-ML</version>
+            <version>1.5.7-ML</version>
         </dependency>
         <dependency>
             <groupId>com.dangdang</groupId>
             <artifactId>sharding-jdbc-core</artifactId>
-            <version>1.5.5-ML</version>
+            <version>1.5.7-ML</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
